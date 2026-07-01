@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>permaEffects</RootNamespace>
+    <AssemblyName>permaEffects</AssemblyName>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="TShockAPI">
+      <HintPath>../../dlls/TShockAPI.dll</HintPath>
+    </Reference>
+
+    <Reference Include="TerrariaServer">
+      <HintPath>../../dlls/TerrariaServer.dll</HintPath>
+    </Reference>
+
+    <!-- <Reference Include="Terraria">
+      <HintPath>/root/steam/common/Terraria/Terraria.exe</HintPath>
+    </Reference> -->
+
+    <Reference Include="OTAPI">
+      <HintPath>../../dlls/OTAPI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
