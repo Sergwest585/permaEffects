@@ -4,8 +4,6 @@ using Terraria;
 using Terraria.ID;
 using TerrariaApi.Server;
 using TShockAPI;
-using TShockAPI.Hooks;
-using System.Linq;
 
 namespace permaEffects;
 
@@ -14,7 +12,7 @@ public class PermaEffectsPlugin(Main game) : TerrariaPlugin(game) {
     public override string Name => "PermaEffectsPlugin";
     public override string Author => "sergwest";
     public override string Description => "give permament effects to player with 30 or more potions";
-    public override Version Version => new(1, 0, 0);
+    public override Version Version => new(1, 1, 0);
     public override void Initialize() {
         TShockAPI.GetDataHandlers.PlayerSpawn += OnPlayerSpawn;
     }
@@ -27,17 +25,30 @@ public class PermaEffectsPlugin(Main game) : TerrariaPlugin(game) {
         base.Dispose(disposing);
     }
 
-    void checkInventoryForBuffs(TSPlayer player, Item[] items) {
+    static void checkInventoryForBuffs(TSPlayer player, Item[] items) {
         foreach (Item item in items) {
             if (item.buffType != 0) {
                 if (item.stack >= 30) player.SetBuff(item.buffType, Int32.MaxValue, true);
             } else {
                 var buffType = item.type switch {
-                    2177 => 93,  // Ammo Box
-                    2999 => 150, // Bewitching
-                    3000 => 159, // Sharpening
-                    4954 => 313, // War Table
-                    1251 => 29,  // Crystal Ball
+                    ItemID.AmmoBox => BuffID.AmmoBox,
+                    ItemID.BewitchingTable => BuffID.Bewitched,
+                    ItemID.SharpeningStation => BuffID.Sharpened,
+                    ItemID.WarTable => BuffID.WarTable,
+                    ItemID.CrystalBall => BuffID.Clairvoyance,
+                    ItemID.DeadCellsPotionStation => BuffID.DeadCellsPotionStation,
+                    ItemID.CatBast => BuffID.CatBast,
+                    ItemID.SliceOfCake => BuffID.SugarRush,
+                    ItemID.HeartLantern => BuffID.HeartLamp,
+                    ItemID.StarinaBottle => BuffID.StarInBottle,
+                    ItemID.Sunflower => BuffID.Sunflower,
+                    // TODO: maybe honey bottles and all candle types?
+                    ItemID.Campfire or 
+                    (>= ItemID.CursedCampfire      and <= ItemID.RainbowCampfire) or
+                    (>= ItemID.UltraBrightCampfire and <= ItemID.BoneCampfire   ) or
+                    (>= ItemID.DesertCampfire      and <= ItemID.JungleCampfire )
+                        => BuffID.Campfire,  // TODO: please, say, tshock has some sort of IsisCampfire(id)!!!
+
                     _ => 0
                 };
                 if ((buffType != 0) && (item.stack >= 3)) {

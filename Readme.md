@@ -2,7 +2,7 @@
 
 ## It is support:
 All effects potions, All food (And all stuff, that has .buffType) and
-Ammo Box, Bewitching, Sharpening, War Table, Crystal Ball
+all furniture from wiki buff page
 
 # Install:
 put `permaEffects.dll` in your tshock plugin folder
